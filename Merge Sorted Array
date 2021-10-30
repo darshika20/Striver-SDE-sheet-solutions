@@ -1,0 +1,30 @@
+/*
+@author: Darshika
+@Question Link: https://leetcode.com/problems/merge-sorted-array/
+*/
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        
+        int gap =(int) (Math.ceil((m+n)/2));
+        
+        for(int i = m;i<nums1.length;i++){
+            nums1[i] = nums2[i-m];
+        }
+        
+        while(gap > 0){
+            for(int i = 0;i<nums1.length-gap;i++){
+                if(nums1[i] > nums1[i+gap]){
+                    swap(nums1,i,i+gap);
+                }
+            }
+            gap--;
+        }
+        
+    }
+    private void swap(int[] nums,int i ,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}

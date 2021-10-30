@@ -1,0 +1,63 @@
+/*
+@author: Darshika
+@Question Link: https://www.codingninjas.com/codestudio/problems/count-inversions_615
+*/
+
+public class Solution {
+   static long res = 0;
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        mergeSort(arr,0,arr.length-1);
+        return res;
+    }
+    private static long[] mergeSort(long[] arr,int lo,int hi){
+        if(lo>hi){
+            return new long[0];
+        }
+        if(lo == hi){
+            long[] temp = new long[1];
+            temp[0] = arr[lo];
+            return temp;
+        }
+        int mid = (lo+hi)/2;
+        long res = 0;
+        long[] left = mergeSort(arr,lo,mid);
+        long[] right=mergeSort(arr,mid+1,hi);
+        arr = sort(left,right);
+        //System.out.println("The sorted array for the range "+lo+" , "+hi);
+        //display(arr);
+        //System.out.println("The value of res for range "+lo+" , "+hi+" is "+sort(arr,lo,mid,hi));
+        return arr;
+    }
+    
+    private static long[] sort(long[] left,long[] right){
+        int i = 0;
+        int j = 0;
+        long[] temp = new long[left.length+right.length];
+        int k = 0;
+        while(i< left.length && j< right.length){
+            if(left[i]<=right[j]){
+                temp[k] = left[i++];
+            }else{
+                temp[k] = right[j++];                
+                res += left.length-1-i+1;
+                //System.out.println("The res value increase for "+mid+" "+i+" is "+res);
+            }
+            k++;
+        }
+        while(i<left.length){
+            temp[k++] = left[i++];
+        }
+        while(j<right.length){
+            temp[k++] = right[j++];
+        }
+        //arr = temp;
+        return temp;
+    } 
+    private static void display(long[] arr){
+        for(long val : arr){
+            System.out.print(val+" ");
+        }
+        System.out.println();
+    }
+}

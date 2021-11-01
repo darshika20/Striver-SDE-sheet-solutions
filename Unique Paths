@@ -1,0 +1,44 @@
+/*
+@author : Darshika
+@Question Link : https://leetcode.com/problems/unique-paths/
+@Time Complexity : O(m) or O(n)
+@Space Complexity : O(1)
+@Trivia : Frequently asked Google Question
+*/
+class Solution {
+    public int uniquePaths(int m, int n) {
+        // int[][] dp = new int[m][n];
+        // for(int i = 0;i<dp.length;i++){
+        //     for(int j =0;j<dp[0].length;j++){
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // return helper(0,0,dp);
+        
+        
+        double r = m-1;
+        double tot = m+n-2;
+        double c = 1;
+        for(double i = 1;i<=r;i++){
+            
+            c = c * (tot-r+i) / i;
+           // System.out.println((tot-i+1)+" "+i+" "+c);
+        }
+        return (int)c;
+    }
+    
+    public int helper(int i ,int j, int[][] dp){        
+        if(i>=dp.length || j>=dp[0].length){
+            return 0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(i==dp.length-1 && j==dp[0].length-1){
+            return 1;
+        }
+        
+        dp[i][j] = helper(i+1,j,dp) + helper(i,j+1,dp);
+        return dp[i][j];
+    }
+}

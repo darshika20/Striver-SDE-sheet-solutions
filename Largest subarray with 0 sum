@@ -1,0 +1,28 @@
+/*
+@author: Darshika
+@Question Link: https://practice.geeksforgeeks.org/problems/largest-subarray-with-0-sum/1#
+@Time Complexity: O(nLogn)
+@Space Complexity: O(n)
+*/
+
+class GfG
+{
+    int maxLen(int arr[], int n)
+    {
+        // Your code here
+        Map<Integer,Integer> map = new HashMap<>();
+        int prefixSum = 0;
+        int count = 0;
+        map.put(0,-1);
+        for(int i = 0;i<arr.length;i++){
+            prefixSum += arr[i];
+            if(map.containsKey(prefixSum)){
+                int temp = (i-map.get(prefixSum));
+                count = Math.max(count,temp);
+            }else{
+                map.put(prefixSum,i);
+            }
+        }
+        return count;
+    }
+}

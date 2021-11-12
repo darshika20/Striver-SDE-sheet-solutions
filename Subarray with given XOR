@@ -1,0 +1,25 @@
+/*
+@author: Darshika
+@Question Link: https://www.interviewbit.com/problems/subarray-with-given-xor/
+@Time Complexity: O(nlogn)
+@Space Complexity: O(n)
+*/
+
+public class Solution {
+    public int solve(ArrayList<Integer> A, int B) {
+        Map<Integer,Integer> freq = new HashMap<>();
+        int xor = 0;
+        int count = 0;
+        for(int val : A){
+            xor ^= val;
+            if(freq.containsKey(xor^B)){
+                count += freq.get(xor^B);
+            }
+            if(xor == B){
+                count++;
+            }
+            freq.put(xor,freq.getOrDefault(xor,0)+1);
+        }
+        return count;
+    }
+}

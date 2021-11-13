@@ -1,0 +1,54 @@
+/*
+@author: Darshika
+@Question Link: https://leetcode.com/problems/reverse-linked-list/
+@Time Complexity: O(n)
+@Space Complexity: O(1)
+*/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode prev = head;
+        ListNode cur = head.next;
+        head.next = null;
+        while(cur!=null){
+            ListNode future = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = future;
+        }
+        return prev;
+    }
+}
+
+/**
+
+* 1->2->3->4->5
+  f = 3
+  p=1
+  c=2
+  1<-2 3->4->5
+  p=2 c= 3
+  f = 4
+  1<-2<-3 4->5
+  p=3 c = 4
+  f= 5
+  1<-2<-3<-4 5
+  p=4 c= 5
+  f = null
+  1<-2<-3<-4<-5
+  p= 5 c= null
+
+*/

@@ -1,0 +1,61 @@
+/*
+@author: Darshika
+@Question Link: https://leetcode.com/problems/copy-list-with-random-pointer/
+@Time Complexity: O(n)
+@Space Complexity: O(1)
+*/
+
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head == null){
+            return null;
+        }
+        //create dup nodes and attach it to next of original node        
+        Node itr = head;
+        Node front = head.next;
+        while(itr!=null){
+            Node dup = new Node(itr.val);
+            front = itr.next;
+            itr.next = dup;
+            dup.next = front;
+            itr = front;
+        }
+        
+        //attach random nodes of dup
+        itr = head;
+        while(itr!=null){
+            itr.next.random =itr.random==null?null:itr.random.next;
+            itr = itr.next.next;
+        }
+        
+        //separate deep nodes and original nodes
+        Node pseudo = new Node(0);
+        Node copy = pseudo;
+        pseudo.next = copy;
+        itr = head;
+        front = head.next.next;
+        while(itr!=null){
+            front = itr.next.next;
+            copy.next = itr.next;
+            copy = copy.next;
+            itr.next = front;
+            itr = front;
+        }
+        return pseudo.next;
+    }
+}

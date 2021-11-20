@@ -1,3 +1,10 @@
+/*
+@author: Darshika
+@Question Link: https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1#
+@Time Complexity: O(nLogn)
+@Space Complexity: O(1)
+*/
+
 class Solution
 {
     //Function to find the minimum number of platforms required at the

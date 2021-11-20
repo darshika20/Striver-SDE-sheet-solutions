@@ -1,0 +1,63 @@
+/*
+@author: Darshika
+@Question Link: https://practice.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1#
+@Time Complexity: O(nLogn)
+@Space Complexity: O(1)
+*/
+
+/*
+class Item {
+    int value, weight;
+    Item(int x, int y){
+        this.value = x;
+        this.weight = y;
+    }
+}
+*/
+
+class ItemComparator implements Comparator<Item>{
+    @Override
+    public int compare(Item a,Item b){
+        double r1 = (double)(a.value)/(double)(a.weight);
+        double r2 = (double)(b.value)/(double)(b.weight);
+        if(r1<r2){
+            return 1;
+        }else if(r1>r2){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+}
+
+class Solution
+{
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n) 
+    {
+        // Your code here
+        Arrays.sort(arr,new ItemComparator());
+        
+
+        
+        double profit = 0;
+        double curwt = 0;
+        
+        for(int i = 0;i<n && curwt < W;i++){
+            //System.out.println(profit+" "+arr[i].value+" "+arr[i].weight);
+            if(curwt + arr[i].weight <= W){
+                curwt += arr[i].weight;
+                profit += arr[i].value;
+            }else{
+                double remwt = W - curwt;
+                curwt = W;
+                profit += ((double)(arr[i].value)/(double)(arr[i].weight)) * (double)(remwt);
+            
+                break;
+            }
+        }
+        
+        return profit;
+        
+    }
+}

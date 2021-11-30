@@ -1,0 +1,33 @@
+/*
+@author: Darshika
+@Question link: https://leetcode.com/problems/combination-sum/
+@Time Complexity: O(2^t * k) k- avg length of each combination
+@Space Complexity: O(m * k)  m- total no of combinations  
+*/
+
+class Solution {
+    
+    private void helper(int pos,int[] arr,int target,List<List<Integer>> ans,List<Integer> ds){
+        if(pos == arr.length){
+            if(target == 0){
+                ans.add(new ArrayList<>(ds));
+            }
+            return;
+        }
+        
+        if(arr[pos] <= target){
+            ds.add(arr[pos]);
+            helper(pos,arr,target-arr[pos],ans,ds);
+            ds.remove(ds.size()-1);
+        }
+        helper(pos+1,arr,target,ans,ds);
+    }
+    
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(0,candidates,target,ans,new ArrayList<>());
+        return ans;
+        
+    }
+}

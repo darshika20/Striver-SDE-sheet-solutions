@@ -1,0 +1,27 @@
+/*
+@author: Darshika
+@Question Link: https://leetcode.com/problems/subsets-ii/
+*/
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> subsets = new ArrayList<>();
+        helper(0,nums,subsets,new ArrayList<>());
+        return subsets;
+    }
+    
+    private void helper(int pos,int[] nums,List<List<Integer>> subsets,List<Integer> temp){
+        subsets.add(new ArrayList<>(temp));
+        
+        for(int i = pos;i<nums.length;i++){
+            if(i == pos || nums[i]!=nums[i-1]){
+                temp.add(nums[i]);
+                //System.out.println(pos+" "+temp);
+                
+                helper(i+1,nums,subsets,temp);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+}

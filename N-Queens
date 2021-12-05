@@ -1,0 +1,42 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/n-queens/
+* Time Complexity: O(n^2)
+* Space Complexity: O(n)
+*/
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        boolean[] col = new boolean[n];
+        boolean[] fdiag = new boolean[2*n-1];
+        boolean[] sdiag = new boolean[2*n-1];
+        List<List<String>> res = new ArrayList<>();
+        helper(0,n,col,fdiag,sdiag,res,new ArrayList<>());
+        return res;
+        
+    }
+    
+    private void helper(int idx,int n,boolean[] col,boolean[] fdiag,boolean[] sdiag,List<List<String>> res,List<String> path){
+        if(idx == n){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        StringBuffer temp = new StringBuffer();
+        for(int i = 0;i<n;i++) temp.append(".");
+        for(int i = 0;i<n;i++){
+            if(!col[i] && !fdiag[idx+i] && !sdiag[idx-i+n-1]){
+                temp.setCharAt(i,'Q');
+                col[i] = true;
+                fdiag[idx+i] = true;
+                sdiag[idx-i+n-1] = true;
+                path.add(temp.toString());
+                helper(idx+1,n,col,fdiag,sdiag,res,path);
+                temp.setCharAt(i,'.');
+                col[i] = false;
+                fdiag[idx+i] = false;
+                sdiag[idx-i+n-1] = false;
+                path.remove(path.size()-1);
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+/**
+* author: Darshika
+* Question Link: https://practice.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1#
+* Time Complexity: O(M^N) M - no of colors N -  no of nodes
+* Space Complexity: O(N)
+*/
+
+
+// { Driver Code Starts
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int tc = scan.nextInt();
+
+        while (tc-- > 0) {
+            int V = scan.nextInt();
+            int C = scan.nextInt();
+            int E = scan.nextInt();
+
+            List<Integer>[] G = new ArrayList[V];
+            for (int i = 0; i < V; i++) {
+                G[i] = new ArrayList<>();
+            }
+
+            for (int i = 0; i < E; i++) {
+                int u = scan.nextInt() - 1;
+                int v = scan.nextInt() - 1;
+                G[u].add(v);
+                G[v].add(u);
+            }
+            int[] color = new int[V];
+
+            System.out.println(new solve().graphColoring(G, color, 0, C) ? 1 : 0);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+class solve 
+{
+    //Function to determine if graph can be coloured with at most M colours such
+    //that no two adjacent vertices of graph are coloured with same colour.
+    public static boolean graphColoring(List<Integer>[] G, int[] color, int node, int C) 
+    {
+        // Your code here
+        if(node == G.length){
+            return true;
+        }
+        for(int i = 1;i<=C;i++){
+            if(isSafe(node,G,color,i)){
+                color[node] = i;
+                if(graphColoring(G,color,node+1,C)){
+                    return true;
+                }
+                color[node] = 0;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean isSafe(int node,List<Integer>[] G,int[] color,int c){
+        for(int n : G[node]){
+            if(color[n] == c){
+                return false;
+            }
+        }
+        return true;
+    }
+}

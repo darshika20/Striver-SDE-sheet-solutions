@@ -1,0 +1,27 @@
+/**
+* author: Darshika
+* Question link: https://leetcode.com/problems/word-break-ii/
+* Time Complexity: O(n^n*logn) n- length of s 
+* Space Complexity: O(n)
+*/
+
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<>();
+        Set<String> words = new HashSet<>(wordDict);
+        helper(s,0,words,"",res);
+        return res;
+    }
+    
+    private void helper(String s,int idx,Set<String> words,String asf,List<String> res){
+        if(idx == s.length()){
+            res.add(asf.substring(0,asf.length()-1));
+            return;
+        }
+        for(int i = idx;i<s.length();i++){
+            if(words.contains(s.substring(idx,i+1))){
+                helper(s,i+1,words,asf+s.substring(idx,i+1)+" ",res);
+            }
+        }
+    }
+}

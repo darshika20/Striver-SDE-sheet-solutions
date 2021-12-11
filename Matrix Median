@@ -1,0 +1,43 @@
+/**
+* author: Darshika
+* Question Link: https://www.interviewbit.com/problems/matrix-median/
+* Time Complexity: O(9nlogm)
+* Space Complexity: O(1)
+*/
+
+public class Solution {
+    public int findMedian(ArrayList<ArrayList<Integer>> A) {
+        int lo = 1;
+        int hi = 1000000000;
+        int median = (A.size() * A.get(0).size()) / 2; //4
+        while(lo<=hi){ //[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] //lo = 5,hi = 4 //[1,2,3,3,5,6,6,9,9]
+            int mid = (lo+hi)/2; //4
+            int countLesserNumbers = 0;  //5
+            for(int i = 0;i<A.size();i++){
+                countLesserNumbers += count(mid,i,A);
+            }
+            if(countLesserNumbers > median){
+                hi = mid - 1;
+            }else{ 
+                lo = mid + 1;
+            }
+        }
+
+        return lo;
+        
+    }
+
+    private int count(int val,int idx,ArrayList<ArrayList<Integer>> A){
+        int lo = 0;
+        int hi = A.get(idx).size()-1;
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            if(A.get(idx).get(mid) <= val){
+                lo = mid+1;
+            }else{
+                hi = mid-1;
+            }
+        }
+        return lo;
+    }
+}

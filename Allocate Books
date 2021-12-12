@@ -1,0 +1,52 @@
+/**
+* author: Darshika
+* Question link: https://www.interviewbit.com/problems/allocate-books/
+* Time Complexity: O(nlogS) S-max element value to total sum of all elements
+* Space Complexity: O(1)
+*/
+
+public class Solution {
+    public int books(ArrayList<Integer> A, int B) {
+        if(B > A.size()){
+            return -1;
+        }
+        int high = 0;
+        int low = A.get(0);
+        for(int val : A){
+            low = Math.max(val,low);
+            high += val;
+        }
+        if(B == A.size()){
+            return low;
+        }
+        while(low <= high){
+            int bar = (low+high) >> 1;
+            if(isAllcoationPossible(bar,A,B)){
+                high = bar-1;
+            }else{
+                low = bar+1;
+            }
+        }
+        return low;
+    }
+
+    private boolean isAllcoationPossible(int bar,List<Integer> A,int B){
+        int pages = 0;
+        int nos = 1;
+        for(int val : A){
+            if(bar < val){
+                return false;
+            }
+            if(pages + val > bar){
+                pages = val;
+                nos++;
+                if(nos > B){
+                    return false;
+                }
+            }else{
+                pages += val;
+            }
+        }
+        return true;
+    }
+}

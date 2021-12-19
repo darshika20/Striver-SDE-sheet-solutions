@@ -1,0 +1,37 @@
+/**
+* author: Darshika
+* Question Link : https://practice.geeksforgeeks.org/problems/sort-a-stack/1#
+* Time Complexity : O(n*n)
+* Space Complexity : Recursive O(n)
+*/
+
+class GfG{
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+		//add code here.
+		sortHelper(s);
+		return s;
+	}
+	private void sortHelper(Stack<Integer> s){
+	    if(s.size() == 0){
+	        return;
+	    }
+	    int temp = s.pop();
+	    sortHelper(s);
+	    if(s.size() == 0 || s.peek() < temp){
+	        s.push(temp);
+	    }else{
+	        insertCorrectPos(s,temp);
+	    }
+	}
+	private void insertCorrectPos(Stack<Integer> s, int temp){
+	    if(s.size() == 0 || s.peek() < temp){
+	        s.push(temp);
+	        return;
+	    }else{
+	        int temp1 = s.pop();
+	        insertCorrectPos(s,temp);
+	        s.push(temp1);
+	    }
+	}
+}

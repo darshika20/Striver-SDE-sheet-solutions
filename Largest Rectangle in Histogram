@@ -1,0 +1,44 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/largest-rectangle-in-histogram/
+* Time Complexity: O(n)
+* Space Complexity: O(n)
+*/
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {//[2,1,5,6,2,3]
+        
+        Stack<Integer> st = new Stack<>();//[1,2]
+        int maxArea = 0;//6
+        
+        for(int i = 0;i<heights.length;i++){//4
+            
+            if(st.size() > 0 && heights[st.peek()] <= heights[i]){
+                st.push(i);
+            } else {
+                while(st.size() > 0 && heights[st.peek()] > heights[i]){
+                    int ht = heights[st.pop()];//
+                    int rb = i;//4
+                    int lb = -1;
+                    if(st.size()>0){
+                        lb = st.peek();//2
+                    }
+                    int width = rb-lb-1;//1
+                    maxArea = Math.max(maxArea, width*ht);
+                }
+                
+                st.push(i);
+            }
+        }
+        while(st.size() > 0){
+            int ht = heights[st.pop()];
+            int lb = -1;
+            if(st.size()>0){
+                lb = st.peek();
+            }
+            int width = heights.length-lb-1;
+            maxArea = Math.max(maxArea, width*ht);
+        }
+        return maxArea;
+    }
+}

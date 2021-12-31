@@ -1,0 +1,33 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/online-stock-span/
+* Time Complexity: O(n)
+* Space Complexity: O(n)
+*/
+
+class StockSpanner {
+    
+    Stack<int[]> st;
+
+    public StockSpanner() {
+        st = new Stack<>();
+    }
+    
+    public int next(int price) {
+        int days = 1;
+        while(st.size() > 0 && st.peek()[0] <= price){
+            days += st.pop()[1];
+        }
+        int[] temp = new int[2];
+        temp[0] = price;
+        temp[1] = days;
+        st.push(temp);
+        return days;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */

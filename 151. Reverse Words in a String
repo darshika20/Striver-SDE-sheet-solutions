@@ -1,0 +1,22 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/reverse-words-in-a-string/
+* Time Complexity: O(n/2)
+* Space Complexity: O(n)
+*/
+
+class Solution {
+    public String reverseWords(String s) {
+        s = s.trim();
+        String[] words = s.split(" ");
+        StringBuffer sb = new StringBuffer();
+        for(int i = words.length-1;i>=0;i--){
+            words[i] = words[i].trim();
+            if(words[i].length() > 0){
+                sb.append(words[i]);
+                sb.append(" ");
+            }            
+        }
+        return sb.toString().trim();
+    }
+}

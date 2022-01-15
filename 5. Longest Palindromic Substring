@@ -1,0 +1,28 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/longest-palindromic-substring/
+* Time Complexity: O(n*n)
+* Space Complexity: O(1)
+*/
+
+class Solution {
+    public String longestPalindrome(String s) {//cbbd
+        int[] result = new int[2];
+        for(int i = 0;i<s.length();i++){//0
+            extend(s,i,i,result);//0
+            extend(s,i,i+1,result);
+        }
+        return s.substring(result[0],result[1] + result[0]);
+    }
+    
+    private void extend(String s,int low,int high,int[] result){
+        while(low >= 0 && high < s.length() && s.charAt(low) == s.charAt(high)){
+            low--;
+            high++;
+        }
+        if(result[1] < high-low-1) {
+            result[0] = low + 1;
+            result[1] = high-low-1;
+        }
+    }
+}

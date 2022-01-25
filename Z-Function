@@ -1,46 +1,49 @@
 /**
 * author: Darshika
-* Question Link: https://www.codingninjas.com/codestudio/problems/1112619?topList=striver-sde-sheet-problems&utm_source=striver&utm_medium=website&leftPanelTab=1
-* Time Complexity; O(n^2)
-* Space Complexity: O(1)
+* Question Link: https://leetcode.com/problems/implement-strstr/
+* Time Complexity: O(m+n)
+* Space Complexity: O(m+n)
 */
 
-public class Solution {
-
-	public static int zAlgorithm(String s, String p, int n, int m) {
-		// Write your code here
-        int count = 0;
-        int hash = createHash(p);
-        for(int i = 0;i<n;i++){
-            if(i < m-1){
-                continue;
-            }
-            if(rabinKarpAlgorithm(s.substring(i-m+1,i+1), p, hash)){
-                count++;
+class Solution {
+    public int strStr(String haystack, String needle) {
+        
+        if(haystack.length() < needle.length()){
+            return -1;
+        }
+        
+        if(needle.length() == 0){
+            return 0;
+        }
+        
+        String word = needle+'#'+haystack;
+        int[] z = zfunc(word);
+        for(int i = 0;i<z.length;i++){
+            //System.out.println(z[i]);
+            if(z[i] == needle.length()){
+                return i-needle.length()-1;
             }
         }
-        return count;
-		
-	}
-    
-    private static boolean rabinKarpAlgorithm(String word, String pattern, int hash) {
-        if(createHash(word) == hash){
-            for(int i = 0;i<word.length();i++){
-                if(word.charAt(i) != pattern.charAt(i)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return -1;
     }
     
-    private static int createHash(String word){
-        int hash = 0;
-        for(char c : word.toCharArray()){
-            hash += c;
+    private int[] zfunc(String word){
+        
+        int[] z = new int[word.length()];
+        int l = 0;
+        int r = 0;
+        for(int i = 1;i< z.length;i++){
+            if(r >= i){
+                z[i] = Math.min(r-i+1,z[i-l]);
+            }
+            while(i+z[i] < word.length() && word.charAt(z[i]) == word.charAt(i+z[i])){
+                z[i]++;
+            }
+            if(i+z[i]-1 > r){
+                l = i;
+                r = i+z[i]-1;
+            }
         }
-        return hash;
+        return z;
     }
-	
 }

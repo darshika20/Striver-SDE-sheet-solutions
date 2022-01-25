@@ -1,0 +1,46 @@
+/**
+* author: Darshika
+* Question Link: https://www.codingninjas.com/codestudio/problems/1112619?topList=striver-sde-sheet-problems&utm_source=striver&utm_medium=website&leftPanelTab=1
+* Time Complexity; O(n^2)
+* Space Complexity: O(1)
+*/
+
+public class Solution {
+
+	public static int zAlgorithm(String s, String p, int n, int m) {
+		// Write your code here
+        int count = 0;
+        int hash = createHash(p);
+        for(int i = 0;i<n;i++){
+            if(i < m-1){
+                continue;
+            }
+            if(rabinKarpAlgorithm(s.substring(i-m+1,i+1), p, hash)){
+                count++;
+            }
+        }
+        return count;
+		
+	}
+    
+    private static boolean rabinKarpAlgorithm(String word, String pattern, int hash) {
+        if(createHash(word) == hash){
+            for(int i = 0;i<word.length();i++){
+                if(word.charAt(i) != pattern.charAt(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    private static int createHash(String word){
+        int hash = 0;
+        for(char c : word.toCharArray()){
+            hash += c;
+        }
+        return hash;
+    }
+	
+}

@@ -1,0 +1,39 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/implement-strstr/
+* Time Complexity: O(n+m)  n- length of string , m - length of pattern
+* Space Complexity: O(n+m)
+*/
+
+class Solution {
+    public int strStr(String s, String p) {
+        
+    int[] pi = createlps(p+'#'+s);
+        for(int i = 0;i<pi.length;i++){
+            if(pi[i] == p.length()){
+                return i - 2 * p.length() ;
+            }
+        }
+        return -1;
+    }
+    private static int[] createlps(String word){
+        int i = 1;
+        int[] lps = new int[word.length()];
+        int len = 0;
+        while(i < word.length()){
+            if(word.charAt(i) == word.charAt(len)){
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len > 0) {
+                    len = lps[len-1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return lps;
+    }
+}

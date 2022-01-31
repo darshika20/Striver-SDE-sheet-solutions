@@ -1,0 +1,32 @@
+/**
+* author: Darshika
+* Question Link: https://leetcode.com/problems/count-and-say/
+* Time Complexity: O(n^2)
+* Space Complexity: O(1)
+*/
+
+class Solution {
+    public String countAndSay(int n) {
+        String base = "1";
+        if(n == 1){
+            return base;
+        }
+        for(int i = 2;i<=n;i++){
+            int count = 0;
+            StringBuffer sb = new StringBuffer();
+            char prev = base.charAt(0);
+            for(char c : base.toCharArray()){
+                if(c == prev){
+                    count++;
+                }else{
+                    sb.append(count+""+prev);
+                    count = 1;
+                }
+                prev = c;
+            }
+            sb.append(count+""+prev);
+            base = sb.toString();
+        }
+        return base;
+    }
+}

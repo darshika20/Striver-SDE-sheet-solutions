@@ -1,0 +1,55 @@
+class Solution {
+    public int longestValidParentheses(String s) {
+        List<List<Integer>> adj = new ArrayList<>();
+        int n = 9;
+        for(int i = 0;i<n;i++){
+            adj.add(new ArrayList<>());
+        }
+        adj.get(0).add(1);
+        adj.get(0).add(3);
+        adj.get(1).add(0);
+        adj.get(1).add(2);
+        adj.get(1).add(3);
+        adj.get(2).add(1);
+        adj.get(2).add(6);
+        adj.get(3).add(0);
+        adj.get(3).add(1);
+        adj.get(3).add(4);
+        adj.get(4).add(3);
+        adj.get(4).add(5);
+        adj.get(5).add(4);
+        adj.get(5).add(6);
+        adj.get(6).add(2);
+        adj.get(6).add(5);
+        adj.get(6).add(7);
+        adj.get(6).add(8);
+        adj.get(7).add(6);
+        adj.get(7).add(8);
+        adj.get(8).add(6);
+        adj.get(8).add(7);
+        
+        shortestPathInUndirectedGraph(0,adj,n);
+        
+        
+        return 0;
+    }
+    private void shortestPathInUndirectedGraph(int src, List<List<Integer>> adj, int n){
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(src);
+        distance[src] = 0;
+        while(!q.isEmpty()){
+            int node = q.poll();
+            for(int nbr : adj.get(node)){
+                if(distance[node] + 1 < distance[nbr]){
+                    distance[nbr] = distance[node]+1;
+                    q.offer(nbr);
+                }
+            }
+        }
+        for(int i = 0;i<distance.length;i++){
+            System.out.println("node : " + i +" distance : " + distance[i]);
+        }
+    }
+}
